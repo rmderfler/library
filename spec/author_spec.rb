@@ -31,4 +31,13 @@ describe Author do
     results = DB.exec("SELECT * FROM books_authors where author_id = #{id_author}")
     expect(results.first['book_id']).to eq id_book.to_s
   end
+
+  it 'deletes an author from the db' do
+    new_author = Author.new({'name' => "Hamlet"})
+    another_author = Author.new({'name' => "Gooddy"})
+    new_author.save
+    another_author.save
+    new_author.delete
+    expect(Author.all).to eq [another_author]
+  end
 end

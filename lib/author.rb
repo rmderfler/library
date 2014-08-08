@@ -30,4 +30,8 @@ class Author
     results = DB.exec("INSERT INTO books_authors (author_id, book_id) VALUES (#{self.id}, #{book.id}) RETURNING id;")
     @id = results.first['id']
   end
+
+  def delete
+    DB.exec("DELETE FROM authors WHERE id = '#{id}'")
+  end
 end
