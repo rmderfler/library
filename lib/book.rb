@@ -1,5 +1,3 @@
-require 'pg'
-
 class Book
 
   attr_accessor :id, :title
@@ -27,8 +25,22 @@ class Book
     self.title = another_title.title
   end
 
-  def self.delete(title)
-    DB.exec("DELETE FROM books WHERE title = '#{title}';")
+  def delete
+    DB.exec("DELETE FROM books WHERE id = '#{@id}';")
   end
+
+  def add_author(author)
+    results = DB.exec("INSERT INTO books_authors (book_id, author_id) VALUES (#{self.id}, #{author.id}) RETURNING id;")
+    @id = results.first['id'].to_i
+  end
+
+  # def Book.search_by_author(author)
+  #   results = DB.exec("SELECT books.* FROM
+  #                     authors JOIN books_authors ON (authors.id = books_authors.author_id)
+  #                             JOIN books on (books_authors.book_id = books.id)
+  #                     where authors.name = '#{author}';")
+  #         binding.pry
+
+  # end
 end
 

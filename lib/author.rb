@@ -1,5 +1,3 @@
-#require 'pg'
-
 class Author
 
   attr_accessor :id, :name
