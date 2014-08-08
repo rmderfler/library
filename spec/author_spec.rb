@@ -15,4 +15,10 @@ describe Author do
     new_author.save
     expect(Author.all).to eq [new_author]
   end
+
+  it 'reads an author object by the same name as the same object' do
+    new_author = Author.new({'name' => "Dos"})
+    another_author = Author.new({'name' => "Dos"})
+    expect(new_author).to eq another_author
+  end
 end

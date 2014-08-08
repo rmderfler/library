@@ -22,4 +22,8 @@ class Author
     results = DB.exec("INSERT INTO authors (name) VALUES ('#{@name}') RETURNING id;")
     @id = results.first['id'].to_i
   end
+
+  def ==(another_author)
+    self.name = another_author.name
+  end
 end
