@@ -31,4 +31,12 @@ describe Patron do
     new_patron.delete
     expect(Patron.all).to eq [another_patron]
   end
+
+  it 'can checkout a book from the library' do
+    new_patron = Patron.new({'name' => "Billy"})
+    new_patron.save
+    new_book = Book.new({'title' => "Crime and Punishment"})
+    new_book.save
+    expect(new_patron.checkout(new_book, '2014-09-01')).to eq
+  end
 end
