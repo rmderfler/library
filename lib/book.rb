@@ -1,3 +1,5 @@
+require 'pg'
+
 class Book
 
   attr_accessor :id, :title
@@ -23,6 +25,10 @@ class Book
 
   def ==(another_title)
     self.title = another_title.title
+  end
+
+  def self.delete(title)
+    DB.exec("DELETE FROM books WHERE title = '#{title}';")
   end
 end
 

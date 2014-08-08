@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'book'
+
 describe Book do
   it "is initialized by a title" do
     new_book = Book.new({'title' => 'War and Peace'})
@@ -22,4 +23,14 @@ describe Book do
     expect(new_book).to eq another_book
   end
 
+  describe '.delete' do
+    it 'deletes a book from the db' do
+      new_book = Book.new({'title' => "Hamlet"})
+      another_book = Book.new({'title' => "Goodnight Moon"})
+      new_book.save
+      another_book.save
+      Book.delete('Hamlet')
+      expect(Book.all).to eq [another_book]
+    end
+  end
 end

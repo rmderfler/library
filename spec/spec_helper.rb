@@ -2,7 +2,6 @@ require 'rspec'
 require 'pg'
 require 'pry'
 
-
 DB = PG.connect({:dbname => 'library_system_test'})
 
 RSpec.configure do |config|
