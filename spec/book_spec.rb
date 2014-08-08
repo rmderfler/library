@@ -55,4 +55,17 @@ describe Book do
       expect(Book.search_by_author("Dostoyevsky")).to eq new_book.title
     end
   end
+
+  describe '.search_by_title' do
+    it 'retrieves the author information for a given title' do
+      new_book = Book.new({'title' => "Crime and Punishment"})
+      another_book = Book.new({'title' => "Goodnight Moon"})
+      new_book.save
+      another_book.save
+      new_author = Author.new({'name' => "Dostoyevsky"})
+      new_author.save
+      new_author.add_book(new_book)
+      expect(Book.search_by_title("Crime and Punishment")).to eq new_author.name
+    end
+  end
 end

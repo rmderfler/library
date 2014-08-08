@@ -1,6 +1,7 @@
 class Book
 
   attr_accessor :id, :title
+  @table = 'books'
 
   def initialize(info)
     @id = info['id']
@@ -8,12 +9,12 @@ class Book
   end
 
   def self.all
-    titles = []
-    results = DB.exec('SELECT * FROM books;')
+    @table = []
+    results = DB.exec("SELECT * FROM books;")
     results.each do |result|
-      titles << Book.new(result)
+      @table << Book.new(result)
     end
-    titles
+    @table
   end
 
   def save
@@ -40,6 +41,14 @@ class Book
                               JOIN books on (books_authors.book_id = books.id)
                       where authors.name = '#{author}';")
     @title = results.first['title']
+  end
+
+  def Book.search_by_title(title)
+    results = DB.exec("SELECT authors.* FROM
+                      books JOIN books_authors ON (books.id = books_authors.book_id)
+                            JOIN authors on (books_authors.author_id = authors.id)
+                      where books.title = '#{title}';")
+    results.first['name']
   end
 end
 

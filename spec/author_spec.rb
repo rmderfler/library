@@ -21,4 +21,14 @@ describe Author do
     another_author = Author.new({'name' => "Dos"})
     expect(new_author).to eq another_author
   end
+
+  it 'adds a book to an author' do
+    new_book = Book.new({'title' => "Crime and Punishment"})
+    id_book = new_book.save
+    new_author = Author.new({'name' => "Dostoyevsky"})
+    id_author = new_author.save
+    new_author.add_book(new_book)
+    results = DB.exec("SELECT * FROM books_authors where author_id = #{id_author}")
+    expect(results.first['book_id']).to eq id_book.to_s
+  end
 end

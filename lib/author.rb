@@ -1,6 +1,7 @@
 class Author
 
   attr_accessor :id, :name
+  @table = 'authors'
 
   def initialize(info)
     @id = info['id']
@@ -23,5 +24,10 @@ class Author
 
   def ==(another_author)
     self.name = another_author.name
+  end
+
+  def add_book(book)
+    results = DB.exec("INSERT INTO books_authors (author_id, book_id) VALUES (#{self.id}, #{book.id}) RETURNING id;")
+    @id = results.first['id']
   end
 end
