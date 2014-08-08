@@ -34,13 +34,12 @@ class Book
     @id = results.first['id'].to_i
   end
 
-  # def Book.search_by_author(author)
-  #   results = DB.exec("SELECT books.* FROM
-  #                     authors JOIN books_authors ON (authors.id = books_authors.author_id)
-  #                             JOIN books on (books_authors.book_id = books.id)
-  #                     where authors.name = '#{author}';")
-  #         binding.pry
-
-  # end
+  def Book.search_by_author(author)
+    results = DB.exec("SELECT books.* FROM
+                      authors JOIN books_authors ON (authors.id = books_authors.author_id)
+                              JOIN books on (books_authors.book_id = books.id)
+                      where authors.name = '#{author}';")
+    @title = results.first['title']
+  end
 end
 

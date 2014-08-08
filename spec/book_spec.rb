@@ -35,23 +35,24 @@ describe Book do
 
   it 'adds an author to a book' do
     new_book = Book.new({'title' => "Crime and Punishment"})
-    new_book.save
+    id_book = new_book.save
     new_author = Author.new({'name' => "Dostoyevsky"})
     id_author = new_author.save
     new_book.add_author(new_author)
-    results = DB.exec("SELECT * FROM books_authors where book_id = #{new_book.id}")
+    results = DB.exec("SELECT * FROM books_authors where book_id = #{id_book}")
     expect(results.first['author_id']).to eq id_author.to_s
   end
 
-  # describe '.search_by_author' do
-  #   it 'retrieves the book information for a given author' do
-  #     new_book = Book.new({'title' => "Crime and Punishment"})
-  #     another_book = Book.new({'title' => "Goodnight Moon"})
-  #     new_book.save
-  #     another_book.save
-  #     new_author = Author.new({'name' => "Dostoyevsky"})
-  #     new_author.save
-  #     expect(Book.search_by_author("Dostoyevsky")).to eq new_book
-  #   end
-  # end
+  describe '.search_by_author' do
+    it 'retrieves the book information for a given author' do
+      new_book = Book.new({'title' => "Crime and Punishment"})
+      another_book = Book.new({'title' => "Goodnight Moon"})
+      new_book.save
+      another_book.save
+      new_author = Author.new({'name' => "Dostoyevsky"})
+      new_author.save
+      new_book.add_author(new_author)
+      expect(Book.search_by_author("Dostoyevsky")).to eq new_book.title
+    end
+  end
 end
