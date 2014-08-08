@@ -9,12 +9,12 @@ class Book
   end
 
   def self.all
-    @table = []
+    all = []
     results = DB.exec("SELECT * FROM books;")
     results.each do |result|
-      @table << Book.new(result)
+      all << self.new(result)
     end
-    @table
+    all
   end
 
   def save
@@ -32,7 +32,6 @@ class Book
 
   def add_author(author)
     results = DB.exec("INSERT INTO books_authors (book_id, author_id) VALUES (#{self.id}, #{author.id});")
-    # @id = results.first['id'].to_i
   end
 
   def Book.search_by_author(author)
