@@ -31,8 +31,8 @@ class Book
   end
 
   def add_author(author)
-    results = DB.exec("INSERT INTO books_authors (book_id, author_id) VALUES (#{self.id}, #{author.id}) RETURNING id;")
-    @id = results.first['id'].to_i
+    results = DB.exec("INSERT INTO books_authors (book_id, author_id) VALUES (#{self.id}, #{author.id});")
+    # @id = results.first['id'].to_i
   end
 
   def Book.search_by_author(author)
